@@ -1,0 +1,319 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Vehicles API",
+    "description": "Vehicles CRUD and Shopping Cart API",
+    "termsOfService": "",
+    "contact": {
+      "email": "oliveirameloeverton@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3210/vehicles",
+      "description": "Test API"
+    },
+    {
+      "url": "https://api-vehicles.herokuapp.com/vehicles",
+      "description": "Production API"
+    }
+  ],
+  "paths": {
+    "/all-vehicles": {
+      "get": {
+        "summary": "All Vehicles List",
+        "description": "Route responsible for listing all vehicles",
+        "tags": ["Vehicles"],
+        "responses": {
+          "404": {
+            "description": "Not Found"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Vehicles"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/one-vehicle/{id}": {
+      "get": {
+        "summary": "Search Vehicle by ID",
+        "description": "Route responsible for getting a vehicle by ID",
+        "tags": ["Vehicles"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Vehicle ID for searching",
+            "required": true
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Vehicles"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/create-vehicle": {
+      "post": {
+        "summary": "Register a new Vehicle",
+        "description": "Route responsible for registering a new Vehicle",
+        "tags": ["Vehicles"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Vehicles"
+              },
+              "examples": {
+                "Vehicles": {
+                  "value": {
+                    "name": "March",
+                    "picture": "picture",
+                    "color": "White",
+                    "manufacturer": "Nissan",
+                    "manufacture_year": 2017,
+                    "model_year": 2016,
+                    "selling_price": 36000,
+                    "description": "White March"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Vehicles"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/update-vehicle/{id}": {
+      "put": {
+        "summary": "Update a vehicle by ID",
+        "description": "Rota responsável por editar uma vehicle pelo ID",
+        "tags": ["Vehicles"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Vehicle ID for searching",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Vehicles"
+              },
+              "examples": {
+                "Vehicles": {
+                  "value": {
+                    "name": "March",
+                    "picture": "picture",
+                    "color": "White",
+                    "manufacturer": "Nissan",
+                    "manufacture_year": 2017,
+                    "model_year": 2016,
+                    "selling_price": 36000,
+                    "description": "White March"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Vehicles"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/delete-vehicle/{id}": {
+      "delete": {
+        "summary": "Delete a vehicle by ID",
+        "description": "Route responsible for deleting a vehicle by ID",
+        "tags": ["Vehicles"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Vehicle ID for deleting",
+            "required": true
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/all-shoppingCart": {
+      "get": {
+        "summary": "List all itens added to the Shopping Cart",
+        "description": "Route responsible for listing all items added to the Shopping Cart",
+        "tags": ["ShoppingCart"],
+        "responses": {
+          "404": {
+            "description": "Not Found"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ShoppingCart"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/create-shoppingCart": {
+      "post": {
+        "summary": "Add many items to the shoppingCart",
+        "description": "Route responsible for adding many items to the shoppingCart",
+        "tags": ["ShoppingCart"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ShoppingCart"
+              },
+              "examples": {
+                "ShoppingCart": {
+                  "value": [
+                    {
+                      "vehicleId": "624230fdcd38269205c82197",
+                      "quantidade": 5
+                    },
+                    {
+                      "vehicleId": "62423c1e618f4a4738a5ee75",
+                      "quantidade": 2
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ShoppingCart"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/finish-shoppingCart": {
+      "delete": {
+        "summary": "Delete all items added to the shoppingCart",
+        "description": "Route responsible for deleting all items added to the shoppingCart",
+        "tags": ["ShoppingCart"],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Vehicles": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "picture": { "type": "string" },
+          "color": { "type": "string" },
+          "manufacturer": { "type": "string" },
+          "manufacture_year": { "type": "number" },
+          "model_year": { "type": "number" },
+          "selling_price": { "type": "number" },
+          "description": { "type": "string" }
+        }
+      },
+      "ShoppingCart": {
+        "type": "object",
+        "properties": {
+          "vehicleId": {
+            "type": "string"
+          },
+          "quantidade": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  }
+}
